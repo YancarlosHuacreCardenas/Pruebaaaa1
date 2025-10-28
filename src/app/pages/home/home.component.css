@@ -1,0 +1,35 @@
+.hero {
+  height: 90vh;
+  background: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836") center/cover;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0px 0px 5px black;
+}
+section {
+  padding: 3rem;
+  text-align: center;
+}
+.service {
+  margin: 1rem;
+  font-size: 1.2rem;
+}
+.integrante {
+  display: inline-block;
+  margin: 1rem;
+}
+.integrante img {
+  border-radius: 50%;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  gap: 1rem;
+}
+form input, form textarea {
+  padding: 0.5rem;
+}

@@ -1,0 +1,47 @@
+<div class="lista-container">
+  <div class="lista-header">
+    <h2>Gestión de Clientes</h2>
+    <a routerLink="/admin/cliente-form" class="btn btn-primary">+ Nuevo Cliente</a>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div *ngIf="loading" class="loading">Cargando clientes...</div>
+  <div *ngIf="!loading && customers.length === 0" class="empty-state">
+    <p>No hay clientes registrados</p>
+  </div>
+
+  <table *ngIf="!loading && customers.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Preferencias</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.customerId }}</td>
+        <td>{{ customer.firstName }} {{ customer.lastName }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ getClientTypeLabel(customer.clientType) }}</td>
+        <td>
+          <span [class.active]="customer.isActive" [class.inactive]="!customer.isActive">
+            {{ customer.isActive ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+        <td>{{ customer.preferences || '-' }}</td> <!-- ✔ mostrar preferences -->
+        <td class="actions">
+          <a *ngIf="customer.isActive" [routerLink]="['/admin/cliente-form', customer.customerId]" class="btn-edit">Editar</a>
+          <button *ngIf="customer.isActive" (click)="deactivateCustomer(customer.customerId)" class="btn-delete">Eliminar</button>
+          <button *ngIf="!customer.isActive" (click)="restoreCustomer(customer.customerId)" class="btn-restore">Restaurar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

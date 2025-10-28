@@ -1,0 +1,80 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>{{ isEditing ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+    <!-- NOMBRE -->
+    <div class="form-group">
+      <label for="firstName">Nombre:</label>
+      <input type="text" id="firstName" formControlName="firstName" class="form-input" placeholder="Ingrese el nombre"/>
+      <span *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched" class="error-text">
+        El nombre es requerido (mínimo 2 caracteres)
+      </span>
+    </div>
+
+    <!-- APELLIDO -->
+    <div class="form-group">
+      <label for="lastName">Apellido:</label>
+      <input type="text" id="lastName" formControlName="lastName" class="form-input" placeholder="Ingrese el apellido"/>
+      <span *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched" class="error-text">
+        El apellido es requerido (mínimo 2 caracteres)
+      </span>
+    </div>
+
+    <!-- TELÉFONO -->
+    <div class="form-group">
+      <label for="phone">Teléfono:</label>
+      <input type="text" id="phone" formControlName="phone" class="form-input" placeholder="Ej: 987654321" (keypress)="onPhoneKeyPress($event)"/>
+      <span *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched" class="error-text">
+        El teléfono debe tener exactamente 9 dígitos numéricos
+      </span>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email" class="form-input" placeholder="correo@vallegrande.edu.pe o correo@gmail.com"/>
+      <span *ngIf="form.get('email')?.touched && form.get('email')?.errors" class="error-text">
+        <span *ngIf="form.get('email')?.errors?.['maxlength']">El correo no puede exceder 35 caracteres</span>
+        <span *ngIf="form.get('email')?.errors?.['pattern']">Solo se aceptan @vallegrande.edu.pe o @gmail.com</span>
+        <span *ngIf="form.get('email')?.errors?.['required']">El correo es requerido</span>
+      </span>
+    </div>
+
+    <!-- PREFERENCES -->
+    <div class="form-group">
+      <label for="preferences">Preferencias:</label>
+      <textarea id="preferences" formControlName="preferences" class="form-input" placeholder="Ingrese preferencias del cliente (opcional)" rows="3"></textarea>
+      <span *ngIf="form.get('preferences')?.errors?.['maxlength']" class="error-text">
+        Máximo 500 caracteres
+      </span>
+    </div>
+
+    <!-- TIPO CLIENTE -->
+    <div class="form-group">
+      <label for="clientType">Tipo de Cliente:</label>
+      <select id="clientType" formControlName="clientType" class="form-input">
+        <option value="A">Tipo A</option>
+        <option value="B">Tipo B</option>
+        <option value="C">Tipo C</option>
+      </select>
+    </div>
+
+    <!-- ACTIVO -->
+    <div class="form-group checkbox">
+      <input type="checkbox" id="isActive" formControlName="isActive" class="form-checkbox" />
+      <label for="isActive">Cliente Activo</label>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
+        {{ loading ? (isEditing ? 'Actualizando...' : 'Guardando...') : (isEditing ? 'Actualizar' : 'Guardar') }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,64 @@
+<div class="lista-container">
+  <div class="lista-header">
+    <h2>Gestión de Productos</h2>
+    <a routerLink="/admin/producto-form" class="btn btn-primary">+ Nuevo Producto</a>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+  <div *ngIf="loading" class="loading">Cargando productos...</div>
+  <div *ngIf="!loading && products.length === 0" class="empty-state">
+    <p>No hay productos registrados</p>
+  </div>
+
+  <table *ngIf="!loading && products.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Disponible</th>
+        <th>Destacado</th>
+        <th>Prep Time</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.product_id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description || '-' }}</td>
+        <td>{{ getCategoryLabel(product.category) }}</td>
+        <td>${{ product.price.toFixed(2) }}</td>
+        <td>
+          <span
+            [class.available]="product.is_available"
+            [class.unavailable]="!product.is_available"
+          >
+            {{ product.is_available ? "Sí" : "No" }}
+          </span>
+        </td>
+        <td>
+          <span
+            [class.featured]="product.is_featured"
+            [class.not-featured]="!product.is_featured"
+          >
+            {{ product.is_featured ? "Sí" : "No" }}
+          </span>
+        </td>
+        <td>{{ product.prep_time || "-" }}</td>
+        <td>
+          <img *ngIf="product.image_url" [src]="product.image_url" alt="{{ product.name }}" class="product-image"/>
+          <span *ngIf="!product.image_url">-</span>
+        </td>
+        <td class="actions">
+          <a [routerLink]="['/admin/producto-form', product.product_id]" class="btn-edit">Editar</a>
+          <button *ngIf="product.is_available" (click)="deleteProduct(product.product_id)" class="btn-delete">Eliminar</button>
+          <button *ngIf="!product.is_available" (click)="restoreProduct(product.product_id)" class="btn btn-primary">Restaurar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

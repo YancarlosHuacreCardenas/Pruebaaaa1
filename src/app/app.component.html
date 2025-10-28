@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Gestión de Clientes</h1>
+
+<app-cliente-lista
+  [clientes]="clientes"
+  (editarCliente)="editarCliente($event)"
+  (eliminarCliente)="eliminarCliente($event)"
+  (restaurarCliente)="restaurarCliente($event)">
+</app-cliente-lista>
+
+<app-cliente-form
+  [cliente]="clienteSeleccionado"
+  (guardar)="agregarOEditar($event)">
+</app-cliente-form>
+
+</div>
