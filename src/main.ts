@@ -1,9 +1,16 @@
 import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { routes } from './app/app.routes';
-import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
+import { provideHttpClient } from '@angular/common/http';
+// ⚠️ No importes nada aquí de @angular/forms
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch(err => console.error(err));
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    // ⚠️ Se elimina la línea provideReactiveForms()
+  ]
+}).catch(err => console.error(err));

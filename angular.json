@@ -22,16 +22,12 @@
               }
             ],
             "polyfills": [
-            "src/polyfills.ts"
+              "src/polyfills.ts"
             ],
             "styles": [
               "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
+            // Se eliminó la configuración de SSR.
           },
           "configurations": {
             "production": {
@@ -94,3 +90,4 @@
     "analytics": "7941550d-21d7-443e-b1f7-293d6e7ff989"
   }
 }
+
